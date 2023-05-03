@@ -4,11 +4,31 @@ A small project that I made with a team for my Algorithms class in my 2nd year.
 ## Merge Sort Algorithm Psuedocode & Time Complexity
 
 ```
-Input: Two sorted arrays arr1[] and arr2[] of size m and n, and an integer k.
-Output: The kth element of the merged sorted array.
-
-1. Merge the two sorted arrays into a single sorted array of size m+n.
-2. Return the kth element of the merged sorted array.
+function find_kth_element(arr1, arr2, m, n, k):
+ i = 0
+ j = 0
+ count = 0
+ while i < m and j < n:
+ if arr1[i] < arr2[j]:
+ count += 1
+ if count == k:
+ return arr1[i]
+ i += 1
+ else:
+ count += 1
+ if count == k:
+ return arr2[j]
+ j += 1
+ while i < m:
+ count += 1
+ if count == k:
+ return arr1[i]
+ i += 1
+ while j < n:
+ count += 1
+ if count == k:
+ return arr2[j]
+ j += 1
 ```
 ### Time Complexity with Documentation:
 
@@ -19,16 +39,25 @@ Output: The kth element of the merged sorted array.
 ## Binary Search Algorithm Psuedocode & Time Complexity
 
 ```
-Input: Two sorted arrays arr1[] and arr2[] of size m and n, and an integer k.
-Output: The kth element of the merged sorted array.
-
-1. Set left and right pointers for both arrays.
-2. While left pointer is less than or equal to right pointer for both arrays:
-    a. Find the middle index of both arrays.
-    b. Calculate the total number of elements from 0 to mid in both arrays.
-    c. If the total number of elements is less than k, discard the left half of both arrays and update left pointers to mid + 1.
-    d. Otherwise, discard the right half of both arrays and update right pointers to mid - 1.
-3. Return the minimum of arr1[left1] and arr2[left2].
+function findKthElement(arr1, arr2, k):
+ if arr1.length == 0:
+ return arr2[k]
+ if arr2.length == 0:
+ return arr1[k]
+ if k == 0:
+ return min(arr1[0], arr2[0])
+ mid1 = (arr1.length - 1) / 2
+ mid2 = (arr2.length - 1) / 2
+ if (mid1 + mid2) < k:
+ if arr1[mid1] > arr2[mid2]:
+ return findKthElement(arr1, arr2[mid2+1:], k - (mid2+1))
+ else:
+ return findKthElement(arr1[mid1+1:], arr2, k - (mid1+1))
+ else:
+ if arr1[mid1] > arr2[mid2]:
+ return findKthElement(arr1[:mid1], arr2, k)
+ else:
+ return findKthElement(arr1, arr2[:mid2], k)
 ```
 
 ### Time Complexity with Documentation:
@@ -39,11 +68,17 @@ Output: The kth element of the merged sorted array.
 
 ## Comparison and Efficiency
 
-The binary search algorithm is more efficient than the merge and sort algorithm, because it has a lower time complexity of O(log m + log n) compared to O(m + n). The binary search algorithm avoids the expensive operation of merging the two arrays, but instead relies on binary search to locate the kth element.
-
-In terms of space complexity, both algorithms require O(m + n) extra space to merge the arrays in the merge and sort algorithm, and O(1) extra space for the binary search algorithm, since it doesn't require any additional memory.
-
-Overall, the binary search algorithm is a more efficient solution for finding the kth element in two sorted arrays.
+The binary search algorithm is more efficient than the merge and sort
+algorithm, because it has a lower time complexity of O(log m + log n)
+compared to O(m + n). The binary search algorithm avoids the
+expensive operation of merging the two arrays, but instead relies on
+binary search to locate the kth element.
+In terms of space complexity, both algorithms require O(m + n) extra
+space to merge the arrays in the merge and sort algorithm, and O(1)
+extra space for the binary search algorithm, since it doesn't require
+any additional memory.
+Overall, the binary search algorithm is a more efficient solution for
+finding the kth element in two sorted arrays
 
 
 
